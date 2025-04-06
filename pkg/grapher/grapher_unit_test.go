@@ -91,3 +91,27 @@ func TestGrapherNormalSeconds(t *testing.T) {
 		assert.Equal(t, fmt.Sprint(i), valueSlice["data"][i])
 	}
 }
+
+func TestGrapherShiftedLabels(t *testing.T) {
+	grapher := grapher.New[int](
+		grapher.Normal,
+		grapher.PreviousValue,
+		"2006-01-02",
+		24*time.Hour,
+	)
+
+	dateNow := time.Now().UTC()
+	for i := 0; i < 2; i++ {
+		grapher.AddPoint(dateNow.AddDate(0, 0, i), i, "data1")
+	}
+
+	for i := 0; i < 2; i++ {
+		grapher.AddPoint(dateNow.AddDate(0, 0, i), i, "data2")
+	}
+
+	dateSlice, valueSlice := grapher.ToStringSlices()
+
+	assert.Equal(t, 2, len(dateSlice))
+	assert.Equal(t, 2, len(valueSlice["data1"]))
+	assert.Equal(t, 2, len(valueSlice["data2"]))
+}
