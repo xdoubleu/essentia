@@ -4,7 +4,7 @@ tools/lint:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
 	go install github.com/segmentio/golines@v0.12.2
 	go install github.com/daixiang0/gci@v0.13.6
-	go install github.com/securego/gosec/v2/cmd/gosec@v2.22.1
+	go install github.com/securego/gosec/v2/cmd/gosec@v2.22.3
 
 lint: tools/lint
 	golangci-lint run
