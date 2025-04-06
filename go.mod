@@ -1,21 +1,23 @@
 module github.com/XDoubleU/essentia
 
-go 1.22
+go 1.23.0
+
+toolchain go1.24.2
 
 require (
 	github.com/getsentry/sentry-go v0.31.1
 	github.com/goddtriffin/helmet v1.0.2
 	github.com/justinas/alice v1.2.0
 	github.com/rs/cors v1.11.1
-	golang.org/x/time v0.10.0
+	golang.org/x/time v0.11.0
 )
 
 require (
-	github.com/coder/websocket v1.8.12
+	github.com/coder/websocket v1.8.13
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/schema v1.4.1
 	github.com/jackc/pgerrcode v0.0.0-20240316143900-6e2875d9b438
-	github.com/jackc/pgx/v5 v5.7.2
+	github.com/jackc/pgx/v5 v5.7.4
 	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.10.0
 )
