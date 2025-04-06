@@ -12,13 +12,13 @@ import (
 	sentrytools "github.com/XDoubleU/essentia/pkg/sentry"
 )
 
-type application struct {
+type Application struct {
 	logger *slog.Logger
 	config Config
 }
 
-func NewApp(logger *slog.Logger, config Config) application {
-	return application{
+func NewApp(logger *slog.Logger, config Config) Application {
+	return Application{
 		logger: logger,
 		config: config,
 	}
@@ -33,12 +33,13 @@ func main() {
 
 	app := NewApp(logger, cfg)
 
+	//nolint:mnd //no magic number
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", app.config.Port),
 		Handler:      app.Routes(),
 		IdleTimeout:  time.Minute,
-		ReadTimeout:  5 * time.Second,  //nolint:gomnd //no magic number
-		WriteTimeout: 10 * time.Second, //nolint:gomnd //no magic number
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
 	}
 
 	err := httptools.Serve(logger, srv, app.config.Env)

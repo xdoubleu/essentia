@@ -8,7 +8,7 @@ import (
 	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
 )
 
-func (app *application) healthRoutes(mux *http.ServeMux) {
+func (app *Application) healthRoutes(mux *http.ServeMux) {
 	mux.HandleFunc(
 		"GET /health",
 		app.getHealthHandler,
@@ -19,9 +19,7 @@ type Health struct {
 	IsDatabaseActive bool
 }
 
-func (app *application) getHealthHandler(w http.ResponseWriter,
-	r *http.Request) {
-
+func (app *Application) getHealthHandler(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), time.Second)
 	defer cancel()
 	data := Health{

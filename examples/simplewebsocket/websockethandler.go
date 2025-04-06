@@ -25,21 +25,20 @@ func (msg SubscribeMessageDto) Topic() string {
 	return msg.TopicName
 }
 
-func (app *application) websocketRoutes(mux *http.ServeMux) {
+func (app *Application) websocketRoutes(mux *http.ServeMux) {
 	mux.HandleFunc(
 		"GET /",
 		app.getWebSocketHandler(),
 	)
 }
 
-func (app *application) getWebSocketHandler() http.HandlerFunc {
-
+func (app *Application) getWebSocketHandler() http.HandlerFunc {
 	wsHandler := wstools.CreateWebSocketHandler[SubscribeMessageDto](
 		app.logger,
 		1,
-		10,
+		10, //nolint:mnd //no magic number
 	)
-	wsHandler.AddTopic(
+	_, err := wsHandler.AddTopic(
 		"topic",
 		app.config.AllowedOrigins,
 		func(_ context.Context, _ *wstools.Topic) (any, error) {
@@ -47,6 +46,9 @@ func (app *application) getWebSocketHandler() http.HandlerFunc {
 				Message: "Hello, World!",
 			}, nil
 		})
+	if err != nil {
+		panic(err)
+	}
 
 	return wsHandler.Handler()
 }
