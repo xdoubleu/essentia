@@ -19,6 +19,7 @@ func NewConfig(logger *slog.Logger) Config {
 	var cfg Config
 
 	cfg.Env = c.EnvStr("ENV", config.ProdEnv)
+	//nolint:mnd //no magic number
 	cfg.Port = c.EnvInt("PORT", 8000)
 	cfg.DBDsn = c.EnvStr("DB_DSN", "postgres://postgres@localhost/postgres")
 	cfg.AllowedOrigins = c.EnvStrArray(

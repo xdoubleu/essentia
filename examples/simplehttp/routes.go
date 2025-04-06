@@ -7,7 +7,7 @@ import (
 	"github.com/justinas/alice"
 )
 
-func (app application) Routes() http.Handler {
+func (app Application) Routes() http.Handler {
 	mux := http.NewServeMux()
 
 	app.healthRoutes(mux)

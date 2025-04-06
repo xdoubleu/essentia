@@ -22,11 +22,11 @@ func TestHealth(t *testing.T) {
 	db, err := postgres.Connect(
 		logger,
 		cfg.DBDsn,
-		25, //nolint:mnd //no magic number
+		25,
 		"15m",
-		30,             //nolint:mnd //no magic number
-		30*time.Second, //nolint:mnd //no magic number
-		5*time.Minute,  //nolint:mnd //no magic number
+		30,
+		30*time.Second,
+		5*time.Minute,
 	)
 	if err != nil {
 		panic(err)

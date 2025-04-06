@@ -8,7 +8,7 @@ import (
 	"github.com/justinas/alice"
 )
 
-func (app application) Routes() http.Handler {
+func (app Application) Routes() http.Handler {
 	mux := http.NewServeMux()
 
 	app.websocketRoutes(mux)
@@ -17,6 +17,7 @@ func (app application) Routes() http.Handler {
 		app.logger,
 		app.config.AllowedOrigins,
 		app.config.Env,
+		//nolint:exhaustruct //not all fields are needed
 		sentry.ClientOptions{},
 	)
 	if err != nil {
