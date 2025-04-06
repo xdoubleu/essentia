@@ -2,8 +2,6 @@ module github.com/XDoubleU/essentia
 
 go 1.23.0
 
-toolchain go1.24.2
-
 require (
 	github.com/getsentry/sentry-go v0.31.1
 	github.com/goddtriffin/helmet v1.0.2

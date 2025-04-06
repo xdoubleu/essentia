@@ -11,7 +11,9 @@ import (
 	"golang.org/x/time/rate"
 )
 
-var cleanerActive bool //nolint: gochecknoglobals //need this
+var cleanerActive bool                 //nolint: gochecknoglobals //need this
+var mu sync.RWMutex                    //nolint: gochecknoglobals //need this
+var clients = make(map[string]*client) //nolint: gochecknoglobals //need this
 
 type client struct {
 	limiter  *rate.Limiter
@@ -25,11 +27,6 @@ func RateLimit(
 	cleanupTimer time.Duration,
 	removeAfter time.Duration,
 ) shared.Middleware {
-	var (
-		mu      sync.RWMutex
-		clients = make(map[string]*client)
-	)
-
 	if !cleanerActive {
 		cleanerActive = true
 		go func() {
