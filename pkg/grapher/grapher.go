@@ -90,6 +90,13 @@ func (grapher *Grapher[T]) getDateIndex(dateStr string, label string) int {
 		)
 	}
 
+	for len(grapher.values[label]) < len(grapher.dateStrings) {
+		grapher.values[label] = append(
+			grapher.values[label],
+			*new(T),
+		)
+	}
+
 	return dateIndex
 }
 
