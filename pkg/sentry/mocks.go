@@ -1,6 +1,7 @@
 package sentry
 
 import (
+	"context"
 	"sync"
 	"time"
 
@@ -46,7 +47,8 @@ func newTransportMock() sentry.Transport {
 	}
 }
 
-func (t *transportMock) Configure(_ sentry.ClientOptions) {}
+func (t *transportMock) FlushWithContext(_ context.Context) bool { return true }
+func (t *transportMock) Configure(_ sentry.ClientOptions)        {}
 func (t *transportMock) SendEvent(event *sentry.Event) {
 	t.mu.Lock()
 	defer t.mu.Unlock()
