@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/xdoubleu/essentia/internal/helpers"
-	"github.com/xdoubleu/essentia/pkg/communication/httptools"
-	"github.com/xdoubleu/essentia/pkg/contexttools"
+	"github.com/xdoubleu/essentia/v2/internal/helpers"
+	"github.com/xdoubleu/essentia/v2/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v2/pkg/contexttools"
 )
 
 // Logger is middleware used to add a logger to

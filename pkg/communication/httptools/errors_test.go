@@ -8,11 +8,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/xdoubleu/essentia/pkg/communication/httptools"
-	"github.com/xdoubleu/essentia/pkg/config"
-	"github.com/xdoubleu/essentia/pkg/contexttools"
-	"github.com/xdoubleu/essentia/pkg/errortools"
-	"github.com/xdoubleu/essentia/pkg/sentrytools"
+	"github.com/xdoubleu/essentia/v2/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v2/pkg/config"
+	"github.com/xdoubleu/essentia/v2/pkg/contexttools"
+	"github.com/xdoubleu/essentia/v2/pkg/errortools"
+	"github.com/xdoubleu/essentia/v2/pkg/sentrytools"
 )
 
 func testError(t *testing.T, handler http.HandlerFunc) (int, errortools.ErrorDto) {

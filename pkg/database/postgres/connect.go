@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/xdoubleu/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/v2/pkg/logging"
 )
 
 // Connect connects to postgres and returns a [*pgxpool.Pool].

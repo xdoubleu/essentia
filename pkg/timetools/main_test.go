@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/pkg/timetools"
+	"github.com/xdoubleu/essentia/v2/pkg/timetools"
 )
 
 func TestStartOfDay(t *testing.T) {

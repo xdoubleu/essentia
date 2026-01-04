@@ -9,9 +9,9 @@ import (
 
 	"github.com/coder/websocket"
 	"github.com/coder/websocket/wsjson"
-	"github.com/xdoubleu/essentia/pkg/contexttools"
-	"github.com/xdoubleu/essentia/pkg/errortools"
-	"github.com/xdoubleu/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/v2/pkg/contexttools"
+	"github.com/xdoubleu/essentia/v2/pkg/errortools"
+	"github.com/xdoubleu/essentia/v2/pkg/logging"
 )
 
 // ErrorResponse is used to handle any kind of error that occurred on a WebSocket.

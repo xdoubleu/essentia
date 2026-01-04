@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/pkg/parse"
+	"github.com/xdoubleu/essentia/v2/pkg/parse"
 )
 
 func TestURLParamOK(t *testing.T) {
@@ -51,7 +51,7 @@ func TestQueryParamOK(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodGet, "http://example.com", nil)
 	req.URL.RawQuery = "queryParam=test"
 
-	result, err := parse.QueryParam[string](req, "queryParam", "default", nil)
+	result, err := parse.QueryParam(req, "queryParam", "default", nil)
 
 	assert.Equal(t, "test", result)
 	assert.Equal(t, nil, err)
@@ -60,7 +60,7 @@ func TestQueryParamOK(t *testing.T) {
 func TestQueryParamNOK(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodGet, "http://example.com", nil)
 
-	result, err := parse.QueryParam[string](req, "queryParam", "default", nil)
+	result, err := parse.QueryParam(req, "queryParam", "default", nil)
 
 	assert.Equal(t, "default", result)
 	assert.Equal(t, nil, err)

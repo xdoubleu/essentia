@@ -10,7 +10,7 @@ import (
 
 	"github.com/coder/websocket"
 	"github.com/coder/websocket/wsjson"
-	"github.com/xdoubleu/essentia/pkg/validate"
+	"github.com/xdoubleu/essentia/v2/pkg/validate"
 )
 
 // SubscribeMessageDto is implemented by all messages

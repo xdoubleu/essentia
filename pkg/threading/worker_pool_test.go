@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/pkg/logging"
-	"github.com/xdoubleu/essentia/pkg/threading"
+	"github.com/xdoubleu/essentia/v2/pkg/logging"
+	"github.com/xdoubleu/essentia/v2/pkg/threading"
 )
 
 func doWork(_ context.Context, _ *slog.Logger) error {

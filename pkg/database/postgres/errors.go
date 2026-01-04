@@ -6,7 +6,7 @@ import (
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/xdoubleu/essentia/pkg/database"
+	"github.com/xdoubleu/essentia/v2/pkg/database"
 )
 
 // PgxErrorToHTTPError converts a database error

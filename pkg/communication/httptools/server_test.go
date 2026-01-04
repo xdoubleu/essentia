@@ -8,8 +8,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/xdoubleu/essentia/internal/mocks"
-	"github.com/xdoubleu/essentia/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v2/internal/mocks"
+	"github.com/xdoubleu/essentia/v2/pkg/communication/httptools"
 )
 
 func TestServerFunc(t *testing.T) {
