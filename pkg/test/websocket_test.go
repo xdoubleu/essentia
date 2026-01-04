@@ -6,12 +6,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	wstools "github.com/XDoubleU/essentia/pkg/communication/ws"
-	"github.com/XDoubleU/essentia/pkg/logging"
-	"github.com/XDoubleU/essentia/pkg/test"
-	"github.com/XDoubleU/essentia/pkg/validate"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/xdoubleu/essentia/pkg/communication/wstools"
+	"github.com/xdoubleu/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/pkg/test"
+	"github.com/xdoubleu/essentia/pkg/validate"
 )
 
 type TestResponse struct {

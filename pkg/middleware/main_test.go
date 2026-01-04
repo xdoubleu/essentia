@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/mocks"
-	"github.com/XDoubleU/essentia/pkg/context"
-	"github.com/XDoubleU/essentia/pkg/middleware"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/internal/mocks"
+	"github.com/xdoubleu/essentia/pkg/contexttools"
+	"github.com/xdoubleu/essentia/pkg/middleware"
 )
 
 func testCORSHeaders(
@@ -110,11 +110,11 @@ func TestErrors(t *testing.T) {
 		},
 		req,
 		func(_ http.ResponseWriter, r *http.Request) {
-			assert.False(t, context.ShowErrors(r.Context()))
+			assert.False(t, contexttools.ShowErrors(r.Context()))
 		},
 	)
 	testMiddleware(t, showErrors, req, func(_ http.ResponseWriter, r *http.Request) {
-		assert.True(t, context.ShowErrors(r.Context()))
+		assert.True(t, contexttools.ShowErrors(r.Context()))
 	})
 }
 

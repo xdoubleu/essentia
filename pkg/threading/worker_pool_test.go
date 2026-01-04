@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/XDoubleU/essentia/pkg/logging"
-	"github.com/XDoubleU/essentia/pkg/threading"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/pkg/threading"
 )
 
 func doWork(_ context.Context, _ *slog.Logger) error {

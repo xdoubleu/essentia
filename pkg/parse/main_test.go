@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/XDoubleU/essentia/pkg/parse"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/pkg/parse"
 )
 
 func TestURLParamOK(t *testing.T) {

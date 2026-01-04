@@ -5,7 +5,7 @@ import (
 	"slices"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/shared"
+	"github.com/xdoubleu/essentia/internal/helpers"
 )
 
 // ValidatorFunc is the expected format used for validating data using [Check].
@@ -17,14 +17,14 @@ func IsNotEmpty(value string) (bool, string) {
 }
 
 // IsGreaterThan checks if the provided value2 > value1.
-func IsGreaterThan[T shared.IntType](value1 T) ValidatorFunc[T] {
+func IsGreaterThan[T helpers.IntType](value1 T) ValidatorFunc[T] {
 	return func(value2 T) (bool, string) {
 		return value2 > value1, fmt.Sprintf("must be greater than %d", value1)
 	}
 }
 
 // IsGreaterThanOrEqual checks if the provided value2 >= value1.
-func IsGreaterThanOrEqual[T shared.IntType](value1 T) ValidatorFunc[T] {
+func IsGreaterThanOrEqual[T helpers.IntType](value1 T) ValidatorFunc[T] {
 	return func(value2 T) (bool, string) {
 		return value2 >= value1,
 			fmt.Sprintf(
@@ -35,14 +35,14 @@ func IsGreaterThanOrEqual[T shared.IntType](value1 T) ValidatorFunc[T] {
 }
 
 // IsLesserThan checks if the provided value2 < value1.
-func IsLesserThan[T shared.IntType](value1 T) ValidatorFunc[T] {
+func IsLesserThan[T helpers.IntType](value1 T) ValidatorFunc[T] {
 	return func(value2 T) (bool, string) {
 		return value2 < value1, fmt.Sprintf("must be lesser than %d", value1)
 	}
 }
 
 // IsLesserThanOrEqual checks if the provided value2 <= value1.
-func IsLesserThanOrEqual[T shared.IntType](value1 T) ValidatorFunc[T] {
+func IsLesserThanOrEqual[T helpers.IntType](value1 T) ValidatorFunc[T] {
 	return func(value2 T) (bool, string) {
 		return value2 <= value1,
 			fmt.Sprintf(

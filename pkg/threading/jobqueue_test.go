@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/XDoubleU/essentia/pkg/logging"
-	"github.com/XDoubleU/essentia/pkg/threading"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/pkg/threading"
 )
 
 type TestJob struct {

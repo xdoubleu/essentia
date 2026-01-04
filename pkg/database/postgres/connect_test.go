@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/mocks"
-	"github.com/XDoubleU/essentia/pkg/database/postgres"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/internal/mocks"
+	"github.com/xdoubleu/essentia/pkg/database/postgres"
 )
 
 func TestConnectRetries(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/XDoubleU/essentia
+module github.com/xdoubleu/essentia
 
 go 1.24.0
 

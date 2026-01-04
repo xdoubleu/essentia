@@ -3,7 +3,7 @@ package main
 import (
 	"log/slog"
 
-	"github.com/XDoubleU/essentia/pkg/config"
+	"github.com/xdoubleu/essentia/pkg/config"
 )
 
 type Config struct {

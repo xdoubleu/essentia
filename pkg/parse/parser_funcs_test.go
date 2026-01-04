@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/XDoubleU/essentia/pkg/parse"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/pkg/parse"
 )
 
 func TestURLParamString(t *testing.T) {

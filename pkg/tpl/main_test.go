@@ -4,8 +4,8 @@ import (
 	"html/template"
 	"testing"
 
-	"github.com/XDoubleU/essentia/pkg/tpl"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/pkg/tpl"
 )
 
 func TestRenderWithPanic(t *testing.T) {
