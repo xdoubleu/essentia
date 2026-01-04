@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/XDoubleU/essentia/pkg/sentry"
+	"github.com/xdoubleu/essentia/pkg/sentrytools"
 )
 
 // DoWork describes the interface for work executed by the workers.
@@ -62,7 +62,7 @@ func (pool *WorkerPool) IsDoingWork() bool {
 // Start starts [Worker]s of a [WorkerPool] if they weren't active yet.
 func (pool *WorkerPool) Start() {
 	for i := range pool.workers {
-		go sentry.GoRoutineWrapper(
+		go sentrytools.GoRoutineWrapper(
 			context.Background(),
 			pool.logger,
 			fmt.Sprintf("Worker %d", i),

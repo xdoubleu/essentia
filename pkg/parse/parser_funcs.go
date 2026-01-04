@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/shared"
 	"github.com/google/uuid"
+	"github.com/xdoubleu/essentia/internal/helpers"
 )
 
 // ParserFunc is the expected format used for parsing data using any parsing function.
@@ -49,7 +49,7 @@ func Int64(isPositive bool, isZero bool) ParserFunc[int64] {
 	}
 }
 
-func parseInt[T shared.IntType](
+func parseInt[T helpers.IntType](
 	isPositive bool,
 	isZero bool,
 	paramType string,

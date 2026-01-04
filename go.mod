@@ -1,4 +1,4 @@
-module github.com/XDoubleU/essentia
+module github.com/xdoubleu/essentia
 
 go 1.24.0
 
@@ -7,7 +7,7 @@ require (
 	github.com/goddtriffin/helmet v1.0.2
 	github.com/justinas/alice v1.2.0
 	github.com/rs/cors v1.11.1
-	golang.org/x/time v0.12.0
+	golang.org/x/time v0.14.0
 )
 
 require (
@@ -27,7 +27,6 @@ require (
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	golang.org/x/crypto v0.45.0 // indirect
 	golang.org/x/sync v0.18.0 // indirect
 	golang.org/x/sys v0.38.0 // indirect

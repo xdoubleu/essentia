@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/XDoubleU/essentia/pkg/grapher"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/pkg/grapher"
 )
 
 func TestGrapherCumulative(t *testing.T) {

@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/XDoubleU/essentia/internal/shared"
 	"github.com/joho/godotenv"
+	"github.com/xdoubleu/essentia/internal/helpers"
 )
 
 // Parser parses the config provided through environment variables.
@@ -49,7 +49,7 @@ func (c Parser) baseEnv(key string) string {
 }
 
 func (c Parser) logValue(valType string, key string, value any) {
-	strVal, err := shared.AnyToString(value)
+	strVal, err := helpers.AnyToString(value)
 	if err != nil {
 		panic(err)
 	}

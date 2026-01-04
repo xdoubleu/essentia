@@ -6,10 +6,10 @@ import (
 	"log/slog"
 	"time"
 
-	sentrytools "github.com/XDoubleU/essentia/pkg/sentry"
 	"github.com/getsentry/sentry-go"
 	"github.com/goddtriffin/helmet"
 	"github.com/justinas/alice"
+	"github.com/xdoubleu/essentia/pkg/sentrytools"
 )
 
 // Minimal provides a predefined chain of useful middleware.

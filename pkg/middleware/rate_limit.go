@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/shared"
-	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
+	"github.com/xdoubleu/essentia/internal/helpers"
+	"github.com/xdoubleu/essentia/pkg/communication/httptools"
 	"golang.org/x/time/rate"
 )
 
@@ -26,7 +26,7 @@ func RateLimit(
 	bucketSize int,
 	cleanupTimer time.Duration,
 	removeAfter time.Duration,
-) shared.Middleware {
+) helpers.Middleware {
 	if !cleanerActive {
 		cleanerActive = true
 		go func() {

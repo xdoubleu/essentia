@@ -5,10 +5,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
-	"github.com/XDoubleU/essentia/pkg/test"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/xdoubleu/essentia/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/pkg/test"
 )
 
 type Test struct {
