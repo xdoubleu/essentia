@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/XDoubleU/essentia/internal/shared"
 	"github.com/joho/godotenv"
+	"github.com/xdoubleu/essentia/internal/shared"
 )
 
 // Parser parses the config provided through environment variables.

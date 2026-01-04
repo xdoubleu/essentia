@@ -5,9 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
 )
 
 func TestCSV(t *testing.T) {

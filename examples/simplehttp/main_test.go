@@ -5,12 +5,12 @@ import (
 	"testing"
 	"time"
 
-	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
-	"github.com/XDoubleU/essentia/pkg/config"
-	"github.com/XDoubleU/essentia/pkg/database/postgres"
-	"github.com/XDoubleU/essentia/pkg/logging"
-	"github.com/XDoubleU/essentia/pkg/test"
 	"github.com/stretchr/testify/assert"
+	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
+	"github.com/xdoubleu/essentia/pkg/config"
+	"github.com/xdoubleu/essentia/pkg/database/postgres"
+	"github.com/xdoubleu/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/pkg/test"
 )
 
 func TestHealth(t *testing.T) {

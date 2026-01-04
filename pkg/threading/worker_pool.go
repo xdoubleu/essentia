@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/XDoubleU/essentia/pkg/sentry"
+	"github.com/xdoubleu/essentia/pkg/sentry"
 )
 
 // DoWork describes the interface for work executed by the workers.

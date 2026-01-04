@@ -3,10 +3,10 @@ package sentry
 import (
 	"net/http"
 
-	"github.com/XDoubleU/essentia/internal/shared"
-	"github.com/XDoubleU/essentia/pkg/config"
 	"github.com/getsentry/sentry-go"
 	sentryhttp "github.com/getsentry/sentry-go/http"
+	"github.com/xdoubleu/essentia/internal/shared"
+	"github.com/xdoubleu/essentia/pkg/config"
 )
 
 // Middleware is middleware used to configure and enable Sentry.

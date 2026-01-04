@@ -5,11 +5,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/XDoubleU/essentia/pkg/config"
-	sentrytools "github.com/XDoubleU/essentia/pkg/sentry"
 	"github.com/getsentry/sentry-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/xdoubleu/essentia/pkg/config"
+	sentrytools "github.com/xdoubleu/essentia/pkg/sentry"
 )
 
 func testMiddleware(

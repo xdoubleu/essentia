@@ -5,7 +5,7 @@ import (
 	"slices"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/shared"
+	"github.com/xdoubleu/essentia/internal/shared"
 )
 
 // ValidatorFunc is the expected format used for validating data using [Check].

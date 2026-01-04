@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/XDoubleU/essentia/pkg/config"
 	"github.com/getsentry/sentry-go"
+	"github.com/xdoubleu/essentia/pkg/config"
 )
 
 // LogHandler is used for capturing logs and sending these to Sentry.

@@ -6,7 +6,7 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/XDoubleU/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/pkg/logging"
 )
 
 // Key is the type used for specifying context keys.

@@ -5,13 +5,13 @@ import (
 	"net/http"
 	"testing"
 
-	wstools "github.com/XDoubleU/essentia/pkg/communication/ws"
-	errortools "github.com/XDoubleU/essentia/pkg/errors"
-	"github.com/XDoubleU/essentia/pkg/logging"
-	"github.com/XDoubleU/essentia/pkg/test"
-	"github.com/XDoubleU/essentia/pkg/validate"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	wstools "github.com/xdoubleu/essentia/pkg/communication/ws"
+	errortools "github.com/xdoubleu/essentia/pkg/errors"
+	"github.com/xdoubleu/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/pkg/test"
+	"github.com/xdoubleu/essentia/pkg/validate"
 )
 
 type TestResponse struct {

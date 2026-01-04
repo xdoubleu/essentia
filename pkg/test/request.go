@@ -12,7 +12,7 @@ import (
 	"strings"
 	"testing"
 
-	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
+	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
 )
 
 // ContentType is used to set the "Content-Type" header of requests.

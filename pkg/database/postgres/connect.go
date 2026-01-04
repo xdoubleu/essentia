@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/XDoubleU/essentia/pkg/logging"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/xdoubleu/essentia/pkg/logging"
 )
 
 // Connect connects to postgres and returns a [*pgxpool.Pool].

@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/mocks"
-	"github.com/XDoubleU/essentia/pkg/context"
-	"github.com/XDoubleU/essentia/pkg/middleware"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/internal/mocks"
+	"github.com/xdoubleu/essentia/pkg/context"
+	"github.com/xdoubleu/essentia/pkg/middleware"
 )
 
 func testCORSHeaders(

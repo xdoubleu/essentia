@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/mocks"
-	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/xdoubleu/essentia/internal/mocks"
+	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
 )
 
 func TestServerFunc(t *testing.T) {

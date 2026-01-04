@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/XDoubleU/essentia/pkg/database"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/xdoubleu/essentia/pkg/database"
 )
 
 // SpanDB is used to wrap database actions in [sentry.Span]s.

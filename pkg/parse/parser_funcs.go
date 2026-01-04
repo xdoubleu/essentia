@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/shared"
 	"github.com/google/uuid"
+	"github.com/xdoubleu/essentia/internal/shared"
 )
 
 // ParserFunc is the expected format used for parsing data using any parsing function.

@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
 	"github.com/stretchr/testify/assert"
+	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
 )
 
 func TestRedirect(t *testing.T) {

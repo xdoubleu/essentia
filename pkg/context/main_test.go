@@ -5,9 +5,9 @@ import (
 	"log/slog"
 	"testing"
 
-	contexttools "github.com/XDoubleU/essentia/pkg/context"
-	"github.com/XDoubleU/essentia/pkg/logging"
 	"github.com/stretchr/testify/assert"
+	contexttools "github.com/xdoubleu/essentia/pkg/context"
+	"github.com/xdoubleu/essentia/pkg/logging"
 )
 
 const testContextKey = contexttools.Key("test")

@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/XDoubleU/essentia/pkg/context"
-	errortools "github.com/XDoubleU/essentia/pkg/errors"
-	"github.com/XDoubleU/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/pkg/context"
+	errortools "github.com/xdoubleu/essentia/pkg/errors"
+	"github.com/xdoubleu/essentia/pkg/logging"
 )
 
 // HandleError is used to translate errors to the right HTTP response.

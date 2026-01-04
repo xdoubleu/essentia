@@ -6,14 +6,14 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	wstools "github.com/XDoubleU/essentia/pkg/communication/ws"
-	"github.com/XDoubleU/essentia/pkg/config"
-	errortools "github.com/XDoubleU/essentia/pkg/errors"
-	"github.com/XDoubleU/essentia/pkg/logging"
-	sentrytools "github.com/XDoubleU/essentia/pkg/sentry"
-	"github.com/XDoubleU/essentia/pkg/test"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	wstools "github.com/xdoubleu/essentia/pkg/communication/ws"
+	"github.com/xdoubleu/essentia/pkg/config"
+	errortools "github.com/xdoubleu/essentia/pkg/errors"
+	"github.com/xdoubleu/essentia/pkg/logging"
+	sentrytools "github.com/xdoubleu/essentia/pkg/sentry"
+	"github.com/xdoubleu/essentia/pkg/test"
 )
 
 func testErrorStatusCode(t *testing.T, handler http.HandlerFunc) int {

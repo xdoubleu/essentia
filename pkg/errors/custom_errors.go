@@ -3,7 +3,7 @@ package errors
 import (
 	"fmt"
 
-	"github.com/XDoubleU/essentia/internal/shared"
+	"github.com/xdoubleu/essentia/internal/shared"
 )
 
 // NotFoundError is used when a certain resource doesn't exist.

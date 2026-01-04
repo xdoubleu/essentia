@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/XDoubleU/essentia/internal/shared"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/internal/shared"
 )
 
 type Random struct {

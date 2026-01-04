@@ -6,10 +6,10 @@ import (
 	"log/slog"
 	"testing"
 
-	"github.com/XDoubleU/essentia/pkg/config"
-	"github.com/XDoubleU/essentia/pkg/logging"
-	"github.com/XDoubleU/essentia/pkg/sentry"
 	"github.com/stretchr/testify/assert"
+	"github.com/xdoubleu/essentia/pkg/config"
+	"github.com/xdoubleu/essentia/pkg/logging"
+	"github.com/xdoubleu/essentia/pkg/sentry"
 )
 
 func TestLogHandlerDev(t *testing.T) {

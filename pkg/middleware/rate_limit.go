@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/XDoubleU/essentia/internal/shared"
-	httptools "github.com/XDoubleU/essentia/pkg/communication/http"
+	"github.com/xdoubleu/essentia/internal/shared"
+	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
 	"golang.org/x/time/rate"
 )
 

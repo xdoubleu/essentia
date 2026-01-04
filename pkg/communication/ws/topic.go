@@ -5,8 +5,8 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/XDoubleU/essentia/pkg/threading"
 	"github.com/coder/websocket"
+	"github.com/xdoubleu/essentia/pkg/threading"
 )
 
 // OnSubscribeCallback is called to fetch data that
