@@ -6,8 +6,8 @@ import (
 	"net/url"
 	"testing"
 
-	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
-	errortools "github.com/xdoubleu/essentia/pkg/errors"
+	"github.com/xdoubleu/essentia/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/pkg/errortools"
 	"github.com/xdoubleu/essentia/pkg/parse"
 	"github.com/xdoubleu/essentia/pkg/test"
 )

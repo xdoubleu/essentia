@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	wstools "github.com/xdoubleu/essentia/pkg/communication/ws"
+	"github.com/xdoubleu/essentia/pkg/communication/wstools"
 	"github.com/xdoubleu/essentia/pkg/validate"
 )
 

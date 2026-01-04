@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	wstools "github.com/xdoubleu/essentia/pkg/communication/ws"
+	"github.com/xdoubleu/essentia/pkg/communication/wstools"
 	"github.com/xdoubleu/essentia/pkg/logging"
 	"github.com/xdoubleu/essentia/pkg/test"
 	"github.com/xdoubleu/essentia/pkg/validate"

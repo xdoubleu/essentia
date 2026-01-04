@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/xdoubleu/essentia/internal/shared"
-	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
-	"github.com/xdoubleu/essentia/pkg/context"
+	"github.com/xdoubleu/essentia/internal/helpers"
+	"github.com/xdoubleu/essentia/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/pkg/contexttools"
 )
 
 // Logger is middleware used to add a logger to
 // the context and log every request and their duration.
-func Logger(logger *slog.Logger) shared.Middleware {
+func Logger(logger *slog.Logger) helpers.Middleware {
 	return func(next http.Handler) http.Handler {
 		return loggerHandler(logger, next)
 	}
@@ -23,7 +23,7 @@ func loggerHandler(logger *slog.Logger, next http.Handler) http.Handler {
 		rw := httptools.NewResponseWriter(w)
 		t := time.Now()
 
-		r = r.WithContext(context.WithLogger(r.Context(), logger))
+		r = r.WithContext(contexttools.WithLogger(r.Context(), logger))
 
 		next.ServeHTTP(rw, r)
 

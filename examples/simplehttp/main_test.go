@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	httptools "github.com/xdoubleu/essentia/pkg/communication/http"
+	"github.com/xdoubleu/essentia/pkg/communication/httptools"
 	"github.com/xdoubleu/essentia/pkg/config"
 	"github.com/xdoubleu/essentia/pkg/database/postgres"
 	"github.com/xdoubleu/essentia/pkg/logging"
