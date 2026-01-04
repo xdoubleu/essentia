@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/xdoubleu/essentia/internal/helpers"
+	"github.com/xdoubleu/essentia/v2/internal/helpers"
 )
 
 // ParserFunc is the expected format used for parsing data using any parsing function.

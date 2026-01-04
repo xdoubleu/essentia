@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"github.com/xdoubleu/essentia/internal/helpers"
+	"github.com/xdoubleu/essentia/v2/internal/helpers"
 )
 
 // Recover is middleware used to recover from a panic.

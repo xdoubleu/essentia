@@ -5,8 +5,8 @@ import (
 
 	"github.com/getsentry/sentry-go"
 	sentryhttp "github.com/getsentry/sentry-go/http"
-	"github.com/xdoubleu/essentia/internal/helpers"
-	"github.com/xdoubleu/essentia/pkg/config"
+	"github.com/xdoubleu/essentia/v2/internal/helpers"
+	"github.com/xdoubleu/essentia/v2/pkg/config"
 )
 
 // Middleware is middleware used to configure and enable Sentry.

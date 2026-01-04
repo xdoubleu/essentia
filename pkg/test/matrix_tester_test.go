@@ -6,10 +6,10 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/xdoubleu/essentia/pkg/communication/httptools"
-	"github.com/xdoubleu/essentia/pkg/errortools"
-	"github.com/xdoubleu/essentia/pkg/parse"
-	"github.com/xdoubleu/essentia/pkg/test"
+	"github.com/xdoubleu/essentia/v2/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v2/pkg/errortools"
+	"github.com/xdoubleu/essentia/v2/pkg/parse"
+	"github.com/xdoubleu/essentia/v2/pkg/test"
 )
 
 func matrixTestHandler(w http.ResponseWriter, r *http.Request) {

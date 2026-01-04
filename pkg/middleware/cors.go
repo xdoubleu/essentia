@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/rs/cors"
-	"github.com/xdoubleu/essentia/internal/helpers"
+	"github.com/xdoubleu/essentia/v2/internal/helpers"
 )
 
 // CORS is middleware used to apply CORS settings.

@@ -3,7 +3,7 @@ package errortools
 import (
 	"fmt"
 
-	"github.com/xdoubleu/essentia/internal/helpers"
+	"github.com/xdoubleu/essentia/v2/internal/helpers"
 )
 
 // NotFoundError is used when a certain resource doesn't exist.
