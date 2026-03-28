@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v2/internal/mocks"
-	"github.com/xdoubleu/essentia/v2/pkg/contexttools"
-	"github.com/xdoubleu/essentia/v2/pkg/middleware"
+	"github.com/xdoubleu/essentia/v3/internal/mocks"
+	"github.com/xdoubleu/essentia/v3/pkg/contexttools"
+	"github.com/xdoubleu/essentia/v3/pkg/middleware"
 )
 
 func testCORSHeaders(

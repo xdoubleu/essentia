@@ -7,11 +7,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/xdoubleu/essentia/v2/pkg/communication/wstools"
-	"github.com/xdoubleu/essentia/v2/pkg/errortools"
-	"github.com/xdoubleu/essentia/v2/pkg/logging"
-	"github.com/xdoubleu/essentia/v2/pkg/test"
-	"github.com/xdoubleu/essentia/v2/pkg/validate"
+	"github.com/xdoubleu/essentia/v3/pkg/communication/wstools"
+	"github.com/xdoubleu/essentia/v3/pkg/errortools"
+	"github.com/xdoubleu/essentia/v3/pkg/logging"
+	"github.com/xdoubleu/essentia/v3/pkg/test"
+	"github.com/xdoubleu/essentia/v3/pkg/validate"
 )
 
 type TestResponse struct {

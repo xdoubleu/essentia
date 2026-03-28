@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v2/pkg/parse"
+	"github.com/xdoubleu/essentia/v3/pkg/parse"
 )
 
 func TestURLParamOK(t *testing.T) {

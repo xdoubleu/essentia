@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/xdoubleu/essentia/v2/pkg/communication/wstools"
-	"github.com/xdoubleu/essentia/v2/pkg/validate"
+	"github.com/xdoubleu/essentia/v3/pkg/communication/wstools"
+	"github.com/xdoubleu/essentia/v3/pkg/validate"
 )
 
 type SubscribeMessageDto struct {
