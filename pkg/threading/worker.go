@@ -68,7 +68,7 @@ func (worker *Worker) Run(ctx context.Context, logger *slog.Logger) error {
 
 		err := doWork(ctx, logger)
 		if err != nil {
-			logger.Error(err.Error())
+			logger.ErrorContext(ctx, err.Error())
 		}
 
 		worker.isDoingWorkMu.Lock()

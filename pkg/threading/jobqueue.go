@@ -220,12 +220,12 @@ func (c *jobContainer) run(ctx context.Context, logger *slog.Logger) error {
 	c.lastRunTime = &nowUTC
 	c.mu.Unlock()
 
-	logger.Debug(fmt.Sprintf("started job %s", c.job.ID()))
+	logger.DebugContext(ctx, fmt.Sprintf("started job %s", c.job.ID()))
 	err := c.job.Run(ctx, logger)
 	if err != nil {
 		return err
 	}
-	logger.Debug(fmt.Sprintf("successfully finished job %s", c.job.ID()))
+	logger.DebugContext(ctx, fmt.Sprintf("successfully finished job %s", c.job.ID()))
 
 	c.mu.RLock()
 	c.callback(c.job.ID(), false, c.lastRunTime)
