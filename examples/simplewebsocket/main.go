@@ -1,25 +1,28 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
 	"time"
 
-	"github.com/xdoubleu/essentia/v2/pkg/communication/httptools"
-	"github.com/xdoubleu/essentia/v2/pkg/logging"
-	"github.com/xdoubleu/essentia/v2/pkg/sentrytools"
+	"github.com/xdoubleu/essentia/v3/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v3/pkg/logging"
+	"github.com/xdoubleu/essentia/v3/pkg/sentrytools"
 )
 
 type Application struct {
 	logger *slog.Logger
+	ctx    context.Context
 	config Config
 }
 
 func NewApp(logger *slog.Logger, config Config) Application {
 	return Application{
 		logger: logger,
+		ctx:    context.Background(),
 		config: config,
 	}
 }

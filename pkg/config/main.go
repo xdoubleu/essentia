@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/joho/godotenv"
-	"github.com/xdoubleu/essentia/v2/internal/helpers"
+	"github.com/xdoubleu/essentia/v3/internal/helpers"
 )
 
 // Parser parses the config provided through environment variables.

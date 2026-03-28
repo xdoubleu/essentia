@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/xdoubleu/essentia/v2/pkg/communication/httptools"
-	"github.com/xdoubleu/essentia/v2/pkg/test"
+	"github.com/xdoubleu/essentia/v3/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v3/pkg/test"
 )
 
 type Test struct {

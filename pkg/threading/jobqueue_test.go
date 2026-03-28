@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v2/pkg/logging"
-	"github.com/xdoubleu/essentia/v2/pkg/threading"
+	"github.com/xdoubleu/essentia/v3/pkg/logging"
+	"github.com/xdoubleu/essentia/v3/pkg/threading"
 )
 
 type TestJob struct {
@@ -29,7 +29,7 @@ func (j TestJob) RunEvery() time.Duration {
 }
 
 func TestJobQueueSimple(t *testing.T) {
-	jobQueue := threading.NewJobQueue(logging.NewNopLogger(), 1, 1)
+	jobQueue := threading.NewJobQueue(t.Context(), logging.NewNopLogger(), 1, 1)
 
 	statesMu := sync.Mutex{}
 	states := []bool{}
@@ -62,7 +62,7 @@ func TestJobQueueSimple(t *testing.T) {
 }
 
 func TestJobQueueSimpleAfterClear(t *testing.T) {
-	jobQueue := threading.NewJobQueue(logging.NewNopLogger(), 1, 1)
+	jobQueue := threading.NewJobQueue(t.Context(), logging.NewNopLogger(), 1, 1)
 
 	statesMu := sync.Mutex{}
 	states := []bool{}
@@ -102,7 +102,7 @@ func TestJobQueueSimpleAfterClear(t *testing.T) {
 }
 
 func TestJobQueueForce(t *testing.T) {
-	jobQueue := threading.NewJobQueue(logging.NewNopLogger(), 1, 1)
+	jobQueue := threading.NewJobQueue(t.Context(), logging.NewNopLogger(), 1, 1)
 
 	statesMu := sync.Mutex{}
 	states := []bool{}

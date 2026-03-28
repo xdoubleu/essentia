@@ -22,12 +22,13 @@ type EventQueue struct {
 
 // NewEventQueue creates a new [EventQueue].
 func NewEventQueue(
+	ctx context.Context,
 	logger *slog.Logger,
 	maxWorkers int,
 	channelBufferSize int,
 ) *EventQueue {
 	pool := &EventQueue{
-		workerPool:    *NewWorkerPool(logger, maxWorkers, channelBufferSize),
+		workerPool:    *NewWorkerPool(ctx, logger, maxWorkers, channelBufferSize),
 		subscribers:   []Subscriber{},
 		subscribersMu: &sync.RWMutex{},
 	}

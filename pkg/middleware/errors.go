@@ -3,8 +3,8 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/xdoubleu/essentia/v2/internal/helpers"
-	"github.com/xdoubleu/essentia/v2/pkg/contexttools"
+	"github.com/xdoubleu/essentia/v3/internal/helpers"
+	"github.com/xdoubleu/essentia/v3/pkg/contexttools"
 )
 
 // ShowErrors is middleware used to show errors.

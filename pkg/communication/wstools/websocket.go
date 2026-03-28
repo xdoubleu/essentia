@@ -1,6 +1,7 @@
 package wstools
 
 import (
+	"context"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 
 	"github.com/coder/websocket"
 	"github.com/coder/websocket/wsjson"
-	"github.com/xdoubleu/essentia/v2/pkg/validate"
+	"github.com/xdoubleu/essentia/v3/pkg/validate"
 )
 
 // SubscribeMessageDto is implemented by all messages
@@ -23,6 +24,7 @@ type SubscribeMessageDto interface {
 // A WebSocketHandler handles incoming requests to a
 // websocket and makes sure subscriptions are made to the right topics.
 type WebSocketHandler[T SubscribeMessageDto] struct {
+	ctx                    context.Context
 	logger                 *slog.Logger
 	maxTopicWorkers        int
 	topicChannelBufferSize int
@@ -31,11 +33,13 @@ type WebSocketHandler[T SubscribeMessageDto] struct {
 
 // CreateWebSocketHandler creates a new [WebSocketHandler].
 func CreateWebSocketHandler[T SubscribeMessageDto](
+	ctx context.Context,
 	logger *slog.Logger,
 	maxTopicWorkers int,
 	topicChannelBufferSize int,
 ) WebSocketHandler[T] {
 	return WebSocketHandler[T]{
+		ctx:                    ctx,
 		logger:                 logger,
 		maxTopicWorkers:        maxTopicWorkers,
 		topicChannelBufferSize: topicChannelBufferSize,
@@ -57,6 +61,7 @@ func (h *WebSocketHandler[T]) AddTopic(
 	}
 
 	topic := NewTopic(
+		h.ctx,
 		h.logger,
 		topicName,
 		allowedOrigins,

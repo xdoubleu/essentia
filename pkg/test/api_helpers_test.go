@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/xdoubleu/essentia/v2/pkg/communication/httptools"
-	"github.com/xdoubleu/essentia/v2/pkg/errortools"
-	"github.com/xdoubleu/essentia/v2/pkg/parse"
-	"github.com/xdoubleu/essentia/v2/pkg/test"
+	"github.com/xdoubleu/essentia/v3/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v3/pkg/errortools"
+	"github.com/xdoubleu/essentia/v3/pkg/parse"
+	"github.com/xdoubleu/essentia/v3/pkg/test"
 )
 
 func paginatedEndpointHandler(w http.ResponseWriter, r *http.Request) {

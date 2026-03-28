@@ -40,9 +40,14 @@ type jobContainer struct {
 }
 
 // NewJobQueue creates a new jobqueue.
-func NewJobQueue(logger *slog.Logger, amountWorkers int, size int) *JobQueue {
+func NewJobQueue(
+	ctx context.Context,
+	logger *slog.Logger,
+	amountWorkers int,
+	size int,
+) *JobQueue {
 	jobQueue := &JobQueue{
-		workerPool:      *NewWorkerPool(logger, amountWorkers, size),
+		workerPool:      *NewWorkerPool(ctx, logger, amountWorkers, size),
 		logger:          logger,
 		recurringJobs:   make(map[string]*jobContainer),
 		schedulerActive: false,

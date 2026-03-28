@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/coder/websocket"
-	"github.com/xdoubleu/essentia/v2/pkg/threading"
+	"github.com/xdoubleu/essentia/v3/pkg/threading"
 )
 
 // OnSubscribeCallback is called to fetch data that
@@ -24,6 +24,7 @@ type Topic struct {
 
 // NewTopic creates a new [Topic].
 func NewTopic(
+	ctx context.Context,
 	logger *slog.Logger,
 	name string,
 	allowedOrigins []string,
@@ -41,6 +42,7 @@ func NewTopic(
 		Name:           name,
 		allowedOrigins: allowedOrigins,
 		eventQueue: threading.NewEventQueue(
+			ctx,
 			logger,
 			maxWorkers,
 			channelBufferSize,

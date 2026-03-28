@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v2/pkg/logging"
-	"github.com/xdoubleu/essentia/v2/pkg/threading"
+	"github.com/xdoubleu/essentia/v3/pkg/logging"
+	"github.com/xdoubleu/essentia/v3/pkg/threading"
 )
 
 func doWork(_ context.Context, _ *slog.Logger) error {
@@ -17,7 +17,7 @@ func doWork(_ context.Context, _ *slog.Logger) error {
 }
 
 func TestBasicWorkerPool(t *testing.T) {
-	workerpool := threading.NewWorkerPool(logging.NewNopLogger(), 1, 2)
+	workerpool := threading.NewWorkerPool(t.Context(), logging.NewNopLogger(), 1, 2)
 
 	workerpool.EnqueueWork(doWork)
 	workerpool.EnqueueWork(doWork)

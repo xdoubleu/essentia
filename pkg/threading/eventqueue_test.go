@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v2/pkg/logging"
-	"github.com/xdoubleu/essentia/v2/pkg/threading"
+	"github.com/xdoubleu/essentia/v3/pkg/logging"
+	"github.com/xdoubleu/essentia/v3/pkg/threading"
 )
 
 type TestSubscriber struct {
@@ -54,7 +54,7 @@ const sleep = 100 * time.Millisecond
 func TestBasic(t *testing.T) {
 	logger := logging.NewNopLogger()
 
-	wp := threading.NewEventQueue(logger, 1, 10)
+	wp := threading.NewEventQueue(t.Context(), logger, 1, 10)
 
 	tSub := NewTestSubscriber()
 	wp.AddSubscriber(tSub)
