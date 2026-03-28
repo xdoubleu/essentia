@@ -54,7 +54,7 @@ const sleep = 100 * time.Millisecond
 func TestBasic(t *testing.T) {
 	logger := logging.NewNopLogger()
 
-	wp := threading.NewEventQueue(logger, 1, 10)
+	wp := threading.NewEventQueue(t.Context(), logger, 1, 10)
 
 	tSub := NewTestSubscriber()
 	wp.AddSubscriber(tSub)

@@ -37,6 +37,7 @@ func setup(t *testing.T) (http.Handler, *wstools.Topic) {
 
 	logger := logging.NewNopLogger()
 	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](
+		t.Context(),
 		logger,
 		1,
 		10,

@@ -24,6 +24,7 @@ type Topic struct {
 
 // NewTopic creates a new [Topic].
 func NewTopic(
+	ctx context.Context,
 	logger *slog.Logger,
 	name string,
 	allowedOrigins []string,
@@ -41,6 +42,7 @@ func NewTopic(
 		Name:           name,
 		allowedOrigins: allowedOrigins,
 		eventQueue: threading.NewEventQueue(
+			ctx,
 			logger,
 			maxWorkers,
 			channelBufferSize,

@@ -40,6 +40,7 @@ func setup(t *testing.T) http.Handler {
 	logger := logging.NewNopLogger()
 
 	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](
+		t.Context(),
 		logger,
 		1,
 		10,
@@ -87,7 +88,7 @@ func TestWebSocketUnknownTopic(t *testing.T) {
 func TestWebSocketExistingHandler(t *testing.T) {
 	logger := logging.NewNopLogger()
 
-	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](logger, 1, 10)
+	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](t.Context(), logger, 1, 10)
 	topic, err := ws.AddTopic(
 		"exists",
 		[]string{"http://localhost"},
@@ -108,7 +109,7 @@ func TestWebSocketExistingHandler(t *testing.T) {
 func TestWebsocketBasic(t *testing.T) {
 	logger := logging.NewNopLogger()
 
-	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](logger, 1, 10)
+	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](t.Context(), logger, 1, 10)
 	topic, err := ws.AddTopic(
 		"exists",
 		[]string{"http://localhost"},
@@ -149,7 +150,7 @@ func TestWebsocketBasic(t *testing.T) {
 func TestWebSocketUpdateExistingTopic(t *testing.T) {
 	logger := logging.NewNopLogger()
 
-	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](logger, 1, 10)
+	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](t.Context(), logger, 1, 10)
 	topic, err := ws.AddTopic(
 		"exists",
 		[]string{"http://localhost"},
@@ -168,7 +169,7 @@ func TestWebSocketUpdateExistingTopic(t *testing.T) {
 func TestWebSocketUpdateNonExistingTopic(t *testing.T) {
 	logger := logging.NewNopLogger()
 
-	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](logger, 1, 10)
+	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](t.Context(), logger, 1, 10)
 	topic, err := ws.UpdateTopicName(&wstools.Topic{
 		Name: "unknown",
 	}, "exists")
@@ -179,7 +180,7 @@ func TestWebSocketUpdateNonExistingTopic(t *testing.T) {
 func TestWebSocketRemoveNonExistingTopic(t *testing.T) {
 	logger := logging.NewNopLogger()
 
-	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](logger, 1, 10)
+	ws := wstools.CreateWebSocketHandler[TestSubscribeMsg](t.Context(), logger, 1, 10)
 	err := ws.RemoveTopic(&wstools.Topic{
 		Name: "unknown",
 	})

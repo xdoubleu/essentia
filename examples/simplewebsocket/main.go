@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -14,12 +15,14 @@ import (
 
 type Application struct {
 	logger *slog.Logger
+	ctx    context.Context
 	config Config
 }
 
 func NewApp(logger *slog.Logger, config Config) Application {
 	return Application{
 		logger: logger,
+		ctx:    context.Background(),
 		config: config,
 	}
 }

@@ -15,6 +15,7 @@ type DoWork = func(ctx context.Context, logger *slog.Logger) error
 // WorkerPool is used to divide [Subscriber]s between [Worker]s.
 // This prevents one [Worker] of being very busy.
 type WorkerPool struct {
+	ctx     context.Context
 	logger  *slog.Logger
 	workers []Worker
 	queue   chan DoWork
@@ -22,11 +23,13 @@ type WorkerPool struct {
 
 // NewWorkerPool creates a new [WorkerPool].
 func NewWorkerPool(
+	ctx context.Context,
 	logger *slog.Logger,
 	amountWorkers int,
 	queueSize int,
 ) *WorkerPool {
 	pool := &WorkerPool{
+		ctx:     ctx,
 		logger:  logger,
 		workers: make([]Worker, amountWorkers),
 		queue:   make(chan DoWork, queueSize),
@@ -63,7 +66,7 @@ func (pool *WorkerPool) IsDoingWork() bool {
 func (pool *WorkerPool) Start() {
 	for i := range pool.workers {
 		go sentrytools.GoRoutineWrapper(
-			context.Background(),
+			pool.ctx,
 			pool.logger,
 			fmt.Sprintf("Worker %d", i),
 			pool.workers[i].Run,

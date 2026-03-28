@@ -17,7 +17,7 @@ func doWork(_ context.Context, _ *slog.Logger) error {
 }
 
 func TestBasicWorkerPool(t *testing.T) {
-	workerpool := threading.NewWorkerPool(logging.NewNopLogger(), 1, 2)
+	workerpool := threading.NewWorkerPool(t.Context(), logging.NewNopLogger(), 1, 2)
 
 	workerpool.EnqueueWork(doWork)
 	workerpool.EnqueueWork(doWork)
