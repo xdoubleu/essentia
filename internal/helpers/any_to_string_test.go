@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v3/internal/helpers"
+	"github.com/xdoubleu/essentia/v4/internal/helpers"
 )
 
 type Random struct {

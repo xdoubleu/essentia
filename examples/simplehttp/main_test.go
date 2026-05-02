@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v3/pkg/communication/httptools"
-	"github.com/xdoubleu/essentia/v3/pkg/config"
-	"github.com/xdoubleu/essentia/v3/pkg/database/postgres"
-	"github.com/xdoubleu/essentia/v3/pkg/logging"
-	"github.com/xdoubleu/essentia/v3/pkg/test"
+	"github.com/xdoubleu/essentia/v4/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v4/pkg/config"
+	"github.com/xdoubleu/essentia/v4/pkg/database/postgres"
+	"github.com/xdoubleu/essentia/v4/pkg/logging"
+	"github.com/xdoubleu/essentia/v4/pkg/test"
 )
 
 func TestHealth(t *testing.T) {

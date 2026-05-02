@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v3/pkg/logging"
-	"github.com/xdoubleu/essentia/v3/pkg/threading"
+	"github.com/xdoubleu/essentia/v4/pkg/logging"
+	"github.com/xdoubleu/essentia/v4/pkg/threading"
 )
 
 type TestSubscriber struct {

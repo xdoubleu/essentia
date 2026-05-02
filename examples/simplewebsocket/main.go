@@ -8,9 +8,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/xdoubleu/essentia/v3/pkg/communication/httptools"
-	"github.com/xdoubleu/essentia/v3/pkg/logging"
-	"github.com/xdoubleu/essentia/v3/pkg/sentrytools"
+	"github.com/xdoubleu/essentia/v4/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v4/pkg/logging"
+	"github.com/xdoubleu/essentia/v4/pkg/sentrytools"
 )
 
 type Application struct {

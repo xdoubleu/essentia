@@ -8,7 +8,7 @@ import (
 
 	"github.com/goddtriffin/helmet"
 	"github.com/justinas/alice"
-	"github.com/xdoubleu/essentia/v3/pkg/sentrytools"
+	"github.com/xdoubleu/essentia/v4/pkg/sentrytools"
 )
 
 // Minimal provides a predefined chain of useful middleware.
