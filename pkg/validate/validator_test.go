@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v3/pkg/validate"
+	"github.com/xdoubleu/essentia/v4/pkg/validate"
 )
 
 type TestStruct struct {

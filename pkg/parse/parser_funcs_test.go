@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v3/pkg/parse"
+	"github.com/xdoubleu/essentia/v4/pkg/parse"
 )
 
 func TestURLParamString(t *testing.T) {

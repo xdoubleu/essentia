@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/xdoubleu/essentia/v3/pkg/communication/httptools"
+	"github.com/xdoubleu/essentia/v4/pkg/communication/httptools"
 )
 
 func (app *Application) healthRoutes(mux *http.ServeMux) {

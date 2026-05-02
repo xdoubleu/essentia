@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/coder/websocket"
-	"github.com/xdoubleu/essentia/v3/pkg/threading"
+	"github.com/xdoubleu/essentia/v4/pkg/threading"
 )
 
 // OnSubscribeCallback is called to fetch data that

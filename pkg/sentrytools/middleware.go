@@ -5,8 +5,8 @@ import (
 
 	"github.com/getsentry/sentry-go"
 	sentryhttp "github.com/getsentry/sentry-go/http"
-	"github.com/xdoubleu/essentia/v3/internal/helpers"
-	"github.com/xdoubleu/essentia/v3/pkg/config"
+	"github.com/xdoubleu/essentia/v4/internal/helpers"
+	"github.com/xdoubleu/essentia/v4/pkg/config"
 )
 
 // Init initializes Sentry and returns a hub clone suitable for use on

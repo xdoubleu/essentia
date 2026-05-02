@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/xdoubleu/essentia/v3/pkg/config"
-	"github.com/xdoubleu/essentia/v3/pkg/logging"
+	"github.com/xdoubleu/essentia/v4/pkg/config"
+	"github.com/xdoubleu/essentia/v4/pkg/logging"
 )
 
 const existingKey, nonExistingKey = "key", "non_key"
