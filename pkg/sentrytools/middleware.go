@@ -9,22 +9,40 @@ import (
 	"github.com/xdoubleu/essentia/v3/pkg/config"
 )
 
+// Init initializes Sentry and returns a hub clone suitable for use on
+// background contexts (e.g. job queues). Returns nil, nil when the DSN is
+// empty or env is [config.TestEnv] — in those cases no initialization is
+// performed and Middleware() handles its own setup.
+// Must be called before Middleware().
+func Init(env string, options sentry.ClientOptions) (*sentry.Hub, error) {
+	if env == config.TestEnv || options.Dsn == "" {
+		return nil, nil //nolint:nilnil //Sentry disabled is not an error
+	}
+
+	if err := sentry.Init(options); err != nil {
+		return nil, err
+	}
+
+	return sentry.CurrentHub().Clone(), nil
+}
+
 // Middleware is middleware used to configure and enable Sentry.
-// When env is [config.TestEnv], a mocked [sentry.Hub] will be used.
-func Middleware(
-	env string,
-	clientOptions sentry.ClientOptions,
-) (helpers.Middleware, error) {
+// Call [Init] at application startup before using this middleware.
+// When env is [config.TestEnv], a mocked [sentry.Hub] will be used and
+// Sentry is self-initialized with mock options.
+func Middleware(env string) (helpers.Middleware, error) {
 	isTestEnv := env == config.TestEnv
 
 	if isTestEnv {
-		clientOptions = MockedSentryClientOptions()
+		if err := sentry.Init(MockedSentryClientOptions()); err != nil {
+			return nil, err
+		}
 	}
 
-	sentryHandler, err := getSentryHandler(clientOptions)
-	if err != nil {
-		return nil, err
-	}
+	//nolint:exhaustruct //other fields are optional
+	sentryHandler := sentryhttp.New(sentryhttp.Options{
+		Repanic: true,
+	})
 
 	if isTestEnv {
 		return func(next http.Handler) http.Handler {
@@ -35,19 +53,6 @@ func Middleware(
 	return func(next http.Handler) http.Handler {
 		return sentryHandler.Handle(next)
 	}, nil
-}
-
-func getSentryHandler(clientOptions sentry.ClientOptions) (*sentryhttp.Handler, error) {
-	err := sentry.Init(clientOptions)
-
-	if err != nil {
-		return nil, err
-	}
-
-	//nolint:exhaustruct //other fields are optional
-	return sentryhttp.New(sentryhttp.Options{
-		Repanic: true,
-	}), nil
 }
 
 func useMockedHub(next http.Handler) http.Handler {

@@ -22,10 +22,7 @@ func testErrorStatusCode(t *testing.T, handler http.HandlerFunc) int {
 	req, _ := http.NewRequest(http.MethodGet, "", nil)
 	res := httptest.NewRecorder()
 
-	sentryMiddleware, err := sentrytools.Middleware(
-		config.TestEnv,
-		sentrytools.MockedSentryClientOptions(),
-	)
+	sentryMiddleware, err := sentrytools.Middleware(config.TestEnv)
 	require.Nil(t, err)
 
 	sentryMiddleware(handler).ServeHTTP(res, req)
@@ -47,10 +44,7 @@ func setupWS(t *testing.T, allowedOrigin string) http.Handler {
 	_, err := wsHandler.AddTopic("topic", []string{allowedOrigin}, nil)
 	require.Nil(t, err)
 
-	sentryMiddleware, err := sentrytools.Middleware(
-		config.TestEnv,
-		sentrytools.MockedSentryClientOptions(),
-	)
+	sentryMiddleware, err := sentrytools.Middleware(config.TestEnv)
 	require.Nil(t, err)
 
 	return sentryMiddleware(wsHandler.Handler())

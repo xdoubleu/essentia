@@ -38,10 +38,7 @@ func testMiddleware(
 func TestMiddleware(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodGet, "http://example.com/foo", nil)
 
-	sentryMiddleware, err := sentrytools.Middleware(
-		config.TestEnv,
-		sentrytools.MockedSentryClientOptions(),
-	)
+	sentryMiddleware, err := sentrytools.Middleware(config.TestEnv)
 	require.Nil(t, err)
 
 	testMiddleware(
