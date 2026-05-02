@@ -74,42 +74,77 @@ func (l *LogHandler) withGroupOrAttrs(goa groupOrAttrs) slog.Handler {
 // Handle handles a [slog.Record] by a [SentryLogHandler].
 func (l *LogHandler) Handle(ctx context.Context, record slog.Record) error {
 	if record.Level == slog.LevelError {
-		l.sendErrorToSentry(ctx, recordToError(record))
+		l.sendErrorToSentry(ctx, record)
 	}
 
 	return l.handler.Handle(ctx, record)
 }
 
-func (l *LogHandler) sendErrorToSentry(ctx context.Context, err error) {
-	if hub := sentry.GetHubFromContext(ctx); hub != nil {
-		hub.WithScope(func(scope *sentry.Scope) {
-			prefix := ""
-
-			for _, goa := range l.goas {
-				temporaryPrefix := prefix
-				if goa.group != "" {
-					temporaryPrefix = fmt.Sprintf("%s.", goa.group)
-				}
-
-				if len(goa.attrs) == 0 {
-					prefix = temporaryPrefix
-					continue
-				}
-
-				for _, attr := range goa.attrs {
-					scope.SetTag(
-						fmt.Sprintf("%s%s", temporaryPrefix, attr.Key),
-						attr.Value.String(),
-					)
-				}
-			}
-
-			scope.SetLevel(sentry.LevelError)
-			hub.CaptureException(err)
-		})
+func (l *LogHandler) sendErrorToSentry(ctx context.Context, record slog.Record) {
+	hub := sentry.GetHubFromContext(ctx)
+	if hub == nil {
+		return
 	}
+
+	hub.WithScope(func(scope *sentry.Scope) {
+		prefix := l.setGoasTags(scope)
+
+		captureErr := l.setRecordTags(scope, record, prefix)
+
+		scope.SetLevel(sentry.LevelError)
+		hub.CaptureException(captureErr)
+	})
 }
 
-func recordToError(record slog.Record) error {
-	return errors.New(record.Message)
+func (l *LogHandler) setGoasTags(scope *sentry.Scope) string {
+	prefix := ""
+
+	for _, goa := range l.goas {
+		temporaryPrefix := prefix
+		if goa.group != "" {
+			temporaryPrefix = fmt.Sprintf("%s.", goa.group)
+		}
+
+		if len(goa.attrs) == 0 {
+			prefix = temporaryPrefix
+			continue
+		}
+
+		for _, attr := range goa.attrs {
+			scope.SetTag(
+				fmt.Sprintf("%s%s", temporaryPrefix, attr.Key),
+				attr.Value.String(),
+			)
+		}
+	}
+
+	return prefix
+}
+
+func (l *LogHandler) setRecordTags(
+	scope *sentry.Scope,
+	record slog.Record,
+	prefix string,
+) error {
+	// Walk per-record attrs: extract the first error value; set the rest as tags.
+	var captureErr error
+	record.Attrs(func(attr slog.Attr) bool {
+		if captureErr == nil && attr.Value.Kind() == slog.KindAny {
+			if err, ok := attr.Value.Any().(error); ok {
+				captureErr = err
+				return true
+			}
+		}
+		scope.SetTag(
+			fmt.Sprintf("%s%s", prefix, attr.Key),
+			attr.Value.String(),
+		)
+		return true
+	})
+
+	if captureErr == nil {
+		captureErr = errors.New(record.Message)
+	}
+
+	return captureErr
 }

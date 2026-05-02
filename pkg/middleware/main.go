@@ -6,7 +6,6 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/getsentry/sentry-go"
 	"github.com/goddtriffin/helmet"
 	"github.com/justinas/alice"
 	"github.com/xdoubleu/essentia/v3/pkg/sentrytools"
@@ -33,40 +32,41 @@ func Default(
 	logger *slog.Logger,
 	allowedOrigins []string,
 ) ([]alice.Constructor, error) {
-	return defaultBase(logger, allowedOrigins, nil, nil)
+	return defaultBase(logger, allowedOrigins, nil)
 }
 
 // DefaultWithSentry provides a predefined chain of useful middleware.
 // Being:
 //   - All middleware from [Default]
 //   - [sentrytools.Middleware]
+//
+// Call [sentrytools.Init] at application startup before using this so that
+// Sentry is initialised exactly once.
 func DefaultWithSentry(
 	logger *slog.Logger,
 	allowedOrigins []string,
 	env string,
-	sentryClientOptions sentry.ClientOptions,
 ) ([]alice.Constructor, error) {
-	return defaultBase(logger, allowedOrigins, &env, &sentryClientOptions)
+	return defaultBase(logger, allowedOrigins, &env)
 }
 
 func defaultBase(
 	logger *slog.Logger,
 	allowedOrigins []string,
 	env *string,
-	sentryClientOptions *sentry.ClientOptions,
 ) ([]alice.Constructor, error) {
-	useSentry := env != nil && sentryClientOptions != nil
+	useSentry := env != nil
 
 	helmet := helmet.Default()
 
 	handlers := Minimal(logger)
 	handlers = append(handlers, helmet.Secure)
-	handlers = append(handlers, CORS(allowedOrigins, true))
+	handlers = append(handlers, CORS(allowedOrigins, useSentry))
 	//nolint:mnd//no magic number
 	handlers = append(handlers, RateLimit(10, 30, time.Minute, 3*time.Minute))
 
 	if useSentry {
-		sentryMiddleware, err := sentrytools.Middleware(*env, *sentryClientOptions)
+		sentryMiddleware, err := sentrytools.Middleware(*env)
 		if err != nil {
 			return nil, err
 		}

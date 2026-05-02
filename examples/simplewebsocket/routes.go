@@ -3,7 +3,6 @@ package main
 import (
 	"net/http"
 
-	"github.com/getsentry/sentry-go"
 	"github.com/justinas/alice"
 	"github.com/xdoubleu/essentia/v3/pkg/middleware"
 )
@@ -17,8 +16,6 @@ func (app Application) Routes() http.Handler {
 		app.logger,
 		app.config.AllowedOrigins,
 		app.config.Env,
-		//nolint:exhaustruct //not all fields are needed
-		sentry.ClientOptions{},
 	)
 	if err != nil {
 		panic(err)

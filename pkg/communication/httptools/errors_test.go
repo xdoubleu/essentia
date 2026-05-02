@@ -31,10 +31,7 @@ func testErrorWithReq(
 
 	res := httptest.NewRecorder()
 
-	sentryMiddleware, err := sentrytools.Middleware(
-		config.TestEnv,
-		sentrytools.MockedSentryClientOptions(),
-	)
+	sentryMiddleware, err := sentrytools.Middleware(config.TestEnv)
 	require.Nil(t, err)
 
 	sentryMiddleware(handler).ServeHTTP(res, req)

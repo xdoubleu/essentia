@@ -33,6 +33,15 @@ func MockedSentryHub() *sentry.Hub {
 	return hub
 }
 
+// MockedHubEvents returns events captured by a hub created via [MockedSentryHub].
+func MockedHubEvents(hub *sentry.Hub) []*sentry.Event {
+	transport, ok := hub.Client().Transport.(*transportMock)
+	if !ok {
+		panic("hub was not created with MockedSentryHub")
+	}
+	return transport.Events()
+}
+
 type transportMock struct {
 	mu        sync.Mutex
 	events    []*sentry.Event
