@@ -7,6 +7,15 @@
     {
       customType: 'regex',
       managerFilePatterns: [
+        '/^\\.github/workflows/.*\\.yml$/',
+      ],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+)\\n\\s+version: (?<currentValue>v[^\\s]+)',
+      ],
+    },
+    {
+      customType: 'regex',
+      managerFilePatterns: [
         '/^Makefile$/',
       ],
       matchStrings: [
