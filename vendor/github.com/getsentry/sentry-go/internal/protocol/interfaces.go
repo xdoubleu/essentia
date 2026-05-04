@@ -21,6 +21,10 @@ type TelemetryItem interface {
 
 	// GetDynamicSamplingContext returns trace context for the envelope header.
 	GetDynamicSamplingContext() map[string]string
+
+	// MakeSerializationSafe prevents serialization races, by serializing user mutable data on the foreground.
+	// Should be used before passing telemetry to the processor.
+	MakeSerializationSafe()
 }
 
 // EnvelopeItemConvertible represents items that can be converted directly to envelope items.
@@ -29,6 +33,14 @@ type EnvelopeItemConvertible interface {
 
 	// ToEnvelopeItem converts the item to a Sentry envelope item.
 	ToEnvelopeItem() (*EnvelopeItem, error)
+}
+
+// EnvelopeConvertible represents items that can convert themselves to complete envelopes.
+type EnvelopeConvertible interface {
+	TelemetryItem
+
+	// ToEnvelope converts the item to a Sentry envelope using the provided header.
+	ToEnvelope(*EnvelopeHeader) (*Envelope, error)
 }
 
 // TelemetryTransport represents the envelope-first transport interface.
