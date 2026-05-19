@@ -31,8 +31,9 @@ func Minimal(logger *slog.Logger) []alice.Constructor {
 func Default(
 	logger *slog.Logger,
 	allowedOrigins []string,
+	extraHeaders ...string,
 ) ([]alice.Constructor, error) {
-	return defaultBase(logger, allowedOrigins, nil)
+	return defaultBase(logger, allowedOrigins, nil, extraHeaders...)
 }
 
 // DefaultWithSentry provides a predefined chain of useful middleware.
@@ -46,14 +47,16 @@ func DefaultWithSentry(
 	logger *slog.Logger,
 	allowedOrigins []string,
 	env string,
+	extraHeaders ...string,
 ) ([]alice.Constructor, error) {
-	return defaultBase(logger, allowedOrigins, &env)
+	return defaultBase(logger, allowedOrigins, &env, extraHeaders...)
 }
 
 func defaultBase(
 	logger *slog.Logger,
 	allowedOrigins []string,
 	env *string,
+	extraHeaders ...string,
 ) ([]alice.Constructor, error) {
 	useSentry := env != nil
 
@@ -61,7 +64,7 @@ func defaultBase(
 
 	handlers := Minimal(logger)
 	handlers = append(handlers, helmet.Secure)
-	handlers = append(handlers, CORS(allowedOrigins, useSentry))
+	handlers = append(handlers, CORS(allowedOrigins, useSentry, extraHeaders...))
 	//nolint:mnd//no magic number
 	handlers = append(handlers, RateLimit(10, 30, time.Minute, 3*time.Minute))
 

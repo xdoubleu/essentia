@@ -187,3 +187,76 @@ func TestRecover(t *testing.T) {
 	assert.Equal(t, "close", res.Header()["Connection"][0])
 	assert.Contains(t, mockedLogger.CapturedLogs(), "PANIC")
 }
+
+func TestCORS_ExtraHeaders(t *testing.T) {
+	allowedOrigins := []string{"http://example.com"}
+
+	// Test with single extra header and no sentry
+	extraHeaders := []string{"connect-protocol-version"}
+	corsHandler := middleware.CORS(allowedOrigins, false, extraHeaders...)
+	testCORSHeaders(
+		t,
+		corsHandler,
+		http.MethodOptions,
+		allowedOrigins,
+		extraHeaders,
+	)
+
+	// Test with extra header and sentry headers
+	sentryHeaders := []string{"connect-protocol-version"}
+	corsSentry := middleware.CORS(
+		allowedOrigins,
+		true,
+		"connect-protocol-version",
+	)
+	testCORSHeaders(
+		t,
+		corsSentry,
+		http.MethodOptions,
+		allowedOrigins,
+		sentryHeaders,
+	)
+}
+
+func TestDefault_AcceptsExtraHeaders(t *testing.T) {
+	mockedLogger := mocks.MockedLogger{}
+	allowedOrigins := []string{"http://example.com"}
+
+	// Test without extra headers
+	handlers, err := middleware.Default(mockedLogger.Logger(), allowedOrigins)
+	assert.NoError(t, err)
+	assert.NotNil(t, handlers)
+
+	// Test with extra headers
+	handlers, err = middleware.Default(
+		mockedLogger.Logger(),
+		allowedOrigins,
+		"connect-protocol-version",
+	)
+	assert.NoError(t, err)
+	assert.NotNil(t, handlers)
+}
+
+func TestDefaultWithSentry_AcceptsExtraHeaders(t *testing.T) {
+	mockedLogger := mocks.MockedLogger{}
+	allowedOrigins := []string{"http://example.com"}
+
+	// Test without extra headers
+	handlers, err := middleware.DefaultWithSentry(
+		mockedLogger.Logger(),
+		allowedOrigins,
+		"development",
+	)
+	assert.NoError(t, err)
+	assert.NotNil(t, handlers)
+
+	// Test with extra headers
+	handlers, err = middleware.DefaultWithSentry(
+		mockedLogger.Logger(),
+		allowedOrigins,
+		"development",
+		"connect-protocol-version",
+	)
+	assert.NoError(t, err)
+	assert.NotNil(t, handlers)
+}

@@ -6,11 +6,16 @@ import (
 )
 
 // CORS is middleware used to apply CORS settings.
-func CORS(allowedOrigins []string, useSentry bool) helpers.Middleware {
+func CORS(
+	allowedOrigins []string,
+	useSentry bool,
+	extraHeaders ...string,
+) helpers.Middleware {
 	allowedHeaders := []string{"content-type"}
 	if useSentry {
 		allowedHeaders = append(allowedHeaders, "baggage", "sentry-trace")
 	}
+	allowedHeaders = append(allowedHeaders, extraHeaders...)
 
 	//nolint:exhaustruct //other fields are optional
 	cors := cors.New(cors.Options{
