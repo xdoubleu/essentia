@@ -3,7 +3,7 @@ module github.com/xdoubleu/essentia/v4
 go 1.25.0
 
 require (
-	github.com/getsentry/sentry-go v0.42.0
+	github.com/getsentry/sentry-go v0.46.2
 	github.com/goddtriffin/helmet v1.0.2
 	github.com/justinas/alice v1.2.0
 	github.com/rs/cors v1.11.1
