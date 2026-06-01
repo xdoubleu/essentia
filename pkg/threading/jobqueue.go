@@ -172,7 +172,12 @@ func (q *JobQueue) startScheduler() {
 				}
 			}
 
-			sleep := getSmallestPeriod(q.recurringJobs)
+			//nolint:mnd //1/10th of period avoids boundary-condition flakiness
+			sleep := getSmallestPeriod(q.recurringJobs) / 10
+			if sleep < 50*time.Millisecond {
+				//nolint:mnd //50ms minimum tick
+				sleep = 50 * time.Millisecond
+			}
 			q.jobsMu.RUnlock()
 
 			time.Sleep(sleep)
