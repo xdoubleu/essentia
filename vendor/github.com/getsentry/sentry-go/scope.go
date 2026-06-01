@@ -4,11 +4,15 @@ import (
 	"bytes"
 	"context"
 	"io"
+	"maps"
 	"net/http"
 	"sync"
 	"time"
 
+	"github.com/getsentry/sentry-go/attribute"
 	"github.com/getsentry/sentry-go/internal/debuglog"
+	"github.com/getsentry/sentry-go/internal/ratelimit"
+	"github.com/getsentry/sentry-go/report"
 )
 
 // Scope holds contextual data for the current scope.
@@ -27,12 +31,12 @@ import (
 // scope into the event.
 type Scope struct {
 	mu          sync.RWMutex
+	attributes  map[string]attribute.Value
 	breadcrumbs []*Breadcrumb
 	attachments []*Attachment
 	user        User
 	tags        map[string]string
 	contexts    map[string]Context
-	extra       map[string]interface{}
 	fingerprint []string
 	level       Level
 	request     *http.Request
@@ -54,11 +58,11 @@ type Scope struct {
 // NewScope creates a new Scope.
 func NewScope() *Scope {
 	return &Scope{
+		attributes:         make(map[string]attribute.Value),
 		breadcrumbs:        make([]*Breadcrumb, 0),
 		attachments:        make([]*Attachment, 0),
 		tags:               make(map[string]string),
 		contexts:           make(map[string]Context),
-		extra:              make(map[string]interface{}),
 		fingerprint:        make([]string, 0),
 		propagationContext: NewPropagationContext(),
 	}
@@ -203,6 +207,27 @@ type readCloser struct {
 	io.Closer
 }
 
+// SetAttributes adds attributes to the current scope.
+func (scope *Scope) SetAttributes(attrs ...attribute.Builder) {
+	scope.mu.Lock()
+	defer scope.mu.Unlock()
+
+	for _, a := range attrs {
+		if a.Value.Type() == attribute.INVALID {
+			debuglog.Printf("invalid attribute: %v", a)
+			continue
+		}
+		scope.attributes[a.Key] = a.Value
+	}
+}
+
+// RemoveAttribute removes an attribute from the current scope.
+func (scope *Scope) RemoveAttribute(key string) {
+	scope.mu.Lock()
+	defer scope.mu.Unlock()
+	delete(scope.attributes, key)
+}
+
 // SetTag adds a tag to the current scope.
 func (scope *Scope) SetTag(key, value string) {
 	scope.mu.Lock()
@@ -255,32 +280,6 @@ func (scope *Scope) RemoveContext(key string) {
 	delete(scope.contexts, key)
 }
 
-// SetExtra adds an extra to the current scope.
-func (scope *Scope) SetExtra(key string, value interface{}) {
-	scope.mu.Lock()
-	defer scope.mu.Unlock()
-
-	scope.extra[key] = value
-}
-
-// SetExtras assigns multiple extras to the current scope.
-func (scope *Scope) SetExtras(extra map[string]interface{}) {
-	scope.mu.Lock()
-	defer scope.mu.Unlock()
-
-	for k, v := range extra {
-		scope.extra[k] = v
-	}
-}
-
-// RemoveExtra removes a extra from the current scope.
-func (scope *Scope) RemoveExtra(key string) {
-	scope.mu.Lock()
-	defer scope.mu.Unlock()
-
-	delete(scope.extra, key)
-}
-
 // SetFingerprint sets new fingerprint for the current scope.
 func (scope *Scope) SetFingerprint(fingerprint []string) {
 	scope.mu.Lock()
@@ -303,6 +302,13 @@ func (scope *Scope) SetPropagationContext(propagationContext PropagationContext)
 	defer scope.mu.Unlock()
 
 	scope.propagationContext = propagationContext
+}
+
+func (scope *Scope) propagationContextSnapshot() PropagationContext {
+	scope.mu.RLock()
+	defer scope.mu.RUnlock()
+
+	return scope.propagationContext
 }
 
 // GetSpan returns the span from the current scope.
@@ -332,15 +338,9 @@ func (scope *Scope) Clone() *Scope {
 	copy(clone.breadcrumbs, scope.breadcrumbs)
 	clone.attachments = make([]*Attachment, len(scope.attachments))
 	copy(clone.attachments, scope.attachments)
-	for key, value := range scope.tags {
-		clone.tags[key] = value
-	}
-	for key, value := range scope.contexts {
-		clone.contexts[key] = cloneContext(value)
-	}
-	for key, value := range scope.extra {
-		clone.extra[key] = value
-	}
+	clone.attributes = maps.Clone(scope.attributes)
+	clone.contexts = maps.Clone(scope.contexts)
+	clone.tags = maps.Clone(scope.tags)
 	clone.fingerprint = make([]string, len(scope.fingerprint))
 	copy(clone.fingerprint, scope.fingerprint)
 	clone.level = scope.level
@@ -366,7 +366,7 @@ func (scope *Scope) AddEventProcessor(processor EventProcessor) {
 }
 
 // ApplyToEvent takes the data from the current scope and attaches it to the event.
-func (scope *Scope) ApplyToEvent(event *Event, hint *EventHint, client *Client) *Event {
+func (scope *Scope) ApplyToEvent(event *Event, hint *EventHint, client *Client) *Event { //nolint:gocyclo
 	scope.mu.RLock()
 	defer scope.mu.RUnlock()
 
@@ -433,13 +433,20 @@ func (scope *Scope) ApplyToEvent(event *Event, hint *EventHint, client *Client) 
 		event.sdkMetaData.dsc = dsc
 	}
 
-	if len(scope.extra) > 0 {
-		if event.Extra == nil {
-			event.Extra = make(map[string]interface{}, len(scope.extra))
+	// If an external trace resolver is registered (e.g. OTel), override
+	// trace/span IDs from the hint context or the scope's request context.
+	if client != nil {
+		var ctx context.Context
+		if hint != nil {
+			ctx = hint.Context
 		}
-
-		for key, value := range scope.extra {
-			event.Extra[key] = value
+		if ctx == nil && scope.request != nil {
+			ctx = scope.request.Context()
+		}
+		if traceID, spanID, ok := client.externalTraceContextFromContext(ctx); event.Type != transactionType && ok {
+			traceCtx := event.Contexts["trace"]
+			traceCtx["trace_id"] = traceID.String()
+			traceCtx["span_id"] = spanID.String()
 		}
 	}
 
@@ -456,7 +463,7 @@ func (scope *Scope) ApplyToEvent(event *Event, hint *EventHint, client *Client) 
 	}
 
 	if event.Request == nil && scope.request != nil {
-		event.Request = NewRequest(scope.request)
+		event.Request = newRequest(scope.request, sendDefaultPIIEnabled(client))
 		// NOTE: The SDK does not attempt to send partial request body data.
 		//
 		// The reason being that Sentry's ingest pipeline and UI are optimized
@@ -465,7 +472,7 @@ func (scope *Scope) ApplyToEvent(event *Event, hint *EventHint, client *Client) 
 		// invalid payloads that are more prone to leaking PII data.
 		//
 		// Users can still send more data along their events if they want to,
-		// for example using Event.Extra.
+		// for example using Event.Contexts.
 		if scope.requestBody != nil && !scope.requestBody.Overflow() {
 			event.Request.Data = string(scope.requestBody.Bytes())
 		}
@@ -473,10 +480,23 @@ func (scope *Scope) ApplyToEvent(event *Event, hint *EventHint, client *Client) 
 
 	for _, processor := range scope.eventProcessors {
 		id := event.EventID
+		category := event.toCategory()
+		spanCountBefore := event.GetSpanCount()
 		event = processor(event, hint)
 		if event == nil {
 			debuglog.Printf("Event dropped by one of the Scope EventProcessors: %s\n", id)
+			if client != nil {
+				client.reportRecorder.RecordOne(report.ReasonEventProcessor, category)
+				if category == ratelimit.CategoryTransaction {
+					client.reportRecorder.Record(report.ReasonEventProcessor, ratelimit.CategorySpan, int64(spanCountBefore))
+				}
+			}
 			return nil
+		}
+		if droppedSpans := spanCountBefore - event.GetSpanCount(); droppedSpans > 0 {
+			if client != nil {
+				client.reportRecorder.Record(report.ReasonEventProcessor, ratelimit.CategorySpan, int64(droppedSpans))
+			}
 		}
 	}
 
@@ -496,7 +516,7 @@ func cloneContext(c Context) Context {
 	return res
 }
 
-func (scope *Scope) populateAttrs(attrs map[string]Attribute) {
+func (scope *Scope) populateAttrs(attrs map[string]attribute.Value) {
 	if scope == nil {
 		return
 	}
@@ -507,60 +527,64 @@ func (scope *Scope) populateAttrs(attrs map[string]Attribute) {
 	// Add user-related attributes
 	if !scope.user.IsEmpty() {
 		if scope.user.ID != "" {
-			attrs["user.id"] = Attribute{Value: scope.user.ID, Type: AttributeString}
+			attrs["user.id"] = attribute.StringValue(scope.user.ID)
 		}
 		if scope.user.Name != "" {
-			attrs["user.name"] = Attribute{Value: scope.user.Name, Type: AttributeString}
+			attrs["user.name"] = attribute.StringValue(scope.user.Name)
 		}
 		if scope.user.Email != "" {
-			attrs["user.email"] = Attribute{Value: scope.user.Email, Type: AttributeString}
+			attrs["user.email"] = attribute.StringValue(scope.user.Email)
 		}
 	}
 
-	// In the future, add scope.attributes here
-	// for k, v := range scope.attributes {
-	//     attrs[k] = v
-	// }
+	for k, v := range scope.attributes {
+		attrs[k] = v
+	}
 }
 
-// resolveScopeAndTrace resolves scope, trace ID, and span ID from the given contexts.
+// hubFromContexts is a helper to return the first hub found in the given contexts.
+func hubFromContexts(ctxs ...context.Context) *Hub {
+	for _, ctx := range ctxs {
+		if ctx == nil {
+			continue
+		}
+		if hub := GetHubFromContext(ctx); hub != nil {
+			return hub
+		}
+	}
+	return nil
+}
+
+// resolveTrace resolves trace ID and span ID from the given scope and contexts.
 //
 // The resolution order follows a most-specific-to-least-specific pattern:
-//  1. Check for span directly in contexts (SpanFromContext) - this is the most specific
+//  1. If an external trace resolver was registered (eg. OTel), we prioritise trace context
+//     information from that
+//  2. Check for span directly in contexts (SpanFromContext) - this is the most specific
 //     source as it represents a span explicitly attached to the current operation's context
-//  2. Check for hub in contexts (GetHubFromContext) - provides access to scope which may
-//     contain a span, but this is less specific than a directly attached span
-//  3. Fall back to CurrentHub() - the global hub as a last resort
+//  3. Check scope's span - provides access to span set on the hub's scope
+//  4. Fall back to scope's propagation context trace ID
 //
 // This ordering ensures we always use the most contextually relevant tracing information.
 // For example, if a specific span is active for an operation, we use that span's trace/span IDs
 // rather than accidentally using a different span that might be set on the hub's scope.
-func resolveScopeAndTrace(ctxs ...context.Context) (scope *Scope, traceID TraceID, spanID SpanID) {
+func resolveTrace(scope *Scope, client *Client, ctxs ...context.Context) (traceID TraceID, spanID SpanID) {
 	var span *Span
-	var hub *Hub
 
 	for _, ctx := range ctxs {
 		if ctx == nil {
 			continue
+		}
+		if client != nil {
+			if traceID, spanID, ok := client.externalTraceContextFromContext(ctx); ok {
+				return traceID, spanID
+			}
 		}
 		if span = SpanFromContext(ctx); span != nil {
 			break
 		}
 	}
 
-	for _, ctx := range ctxs {
-		if ctx == nil {
-			continue
-		}
-		if hub = GetHubFromContext(ctx); hub != nil {
-			break
-		}
-	}
-	if hub == nil {
-		hub = CurrentHub()
-	}
-
-	scope = hub.Scope()
 	if scope != nil {
 		scope.mu.RLock()
 		if span == nil {
@@ -575,5 +599,5 @@ func resolveScopeAndTrace(ctxs ...context.Context) (scope *Scope, traceID TraceI
 		scope.mu.RUnlock()
 	}
 
-	return scope, traceID, spanID
+	return traceID, spanID
 }
