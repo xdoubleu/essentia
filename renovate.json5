@@ -34,4 +34,18 @@
   automerge: true,
   automergeType: 'pr',
   platformAutomerge: true,
+  commitMessagePrefix: 'chore(deps):',
+  packageRules: [
+    {
+      matchCategories: ['security'],
+      commitMessagePrefix: 'fix(deps):',
+      addLabels: ['security'],
+    },
+    {
+      matchManagers: ['gomod'],
+      matchUpdateTypes: ['major'],
+      automerge: false,
+      commitMessagePrefix: 'chore(deps):',
+    },
+  ],
 }
