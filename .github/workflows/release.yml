@@ -1,0 +1,40 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - uses: actions/checkout@v6
+        if: steps.release.outputs.pr-number
+
+      - name: Detect major bump
+        if: steps.release.outputs.pr-number
+        id: check-major
+        run: |
+          CURRENT_MAJOR=$(jq -r '."."' .release-please-manifest.json | cut -d. -f1)
+          PR_TITLE=$(gh pr view ${{ steps.release.outputs.pr-number }} --json title -q .title)
+          PROPOSED_MAJOR=$(echo "$PR_TITLE" | grep -oP '\d+\.\d+\.\d+' | head -1 | cut -d. -f1)
+          echo "is-major=$([ "$PROPOSED_MAJOR" != "$CURRENT_MAJOR" ] && echo true || echo false)" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-merge non-major release PRs
+        if: steps.release.outputs.pr-number && steps.check-major.outputs.is-major == 'false'
+        run: gh pr merge --auto --squash ${{ steps.release.outputs.pr-number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
